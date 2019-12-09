@@ -1,6 +1,15 @@
 // Challenge #1: make this show up on the
 // page at all.
 const oneAddress = "https://google.com";
+
+const addresses = [
+    "https://google.com",
+    "https://bing.com",
+    "https://duckduckgo.com",
+    "https://instagram.com",
+    "https://marthastewart.com"
+];
+
 const linkContainer = document.querySelector(".js-link-container");
 
 function linkPlacer(linkPath){
@@ -10,18 +19,11 @@ function linkPlacer(linkPath){
     linkContainer.appendChild(links);
 }
 
+// Testing our linkPlacer function
 // linkPlacer(oneAddress);
 // linkPlacer("https://instagram.com");
 // linkPlacer("https://marthastewart.com");
 
-
-const addresses = [
-    "https://google.com",
-    "https://bing.com",
-    "https://duckduckgo.com",
-    "https://instagram.com",
-    "https://marthastewart.com"
-];
 
 function anchorFromLinkPath(linkPath) {
     // They pass a string like "https://google.com"
@@ -58,19 +60,23 @@ function appendElementToContainer(element) {
     appendBreak();
 }
 
+// Version #2: Break into multiple helper functions
+// so we can introduce additional steps.
 // Transform addresses into anchor elements
-let links = addresses.map(anchorFromLinkPath);
-links = links.map(anchorWithFormattedText);
-let items = links.map(listItemWithAnchor);
-let list = listWithListItems(items);
-appendElementToContainer(list);
-
 // let links = addresses.map(anchorFromLinkPath);
-// links = addresses.map(anchorFromLinkPath).map(anchorWithFormattedText);
+// // Format their textContent
+// links = links.map(anchorWithFormattedText)
+// // Append them to the container
+// links.map(appendElementToContainer)
+
+// Version #3: Chaining syntax
 // addresses
 //     .map(anchorFromLinkPath)
 //     .map(anchorWithFormattedText)
 //     .map(appendAnchorToContainer)
+
+
+
 
 function listItemWithAnchor(anchor) {
     // They give me element like this:
@@ -95,7 +101,26 @@ function listWithListItems(listItemArray) {
     return ul;
 }
 
+// Testing our helper functions:
 // const a = anchorFromLinkPath(oneAddress);
 // const li = listItemWithAnchor(a);
 // const ul = listWithListItems([li]);
 // appendElementToContainer(ul);
+
+
+// Version #4: Wrap anchors in list items in an unordered list
+let links = addresses.map(anchorFromLinkPath);
+links = links.map(anchorWithFormattedText);
+let items = links.map(listItemWithAnchor);
+let list = listWithListItems(items);
+appendElementToContainer(list);
+
+
+// Versino #5 Extra fancy: uses chaining syntax
+// let list = addresses
+//             .map(anchorFromLinkPath)
+//             .map(anchorWithFormattedText)
+//             .map(listItemWithAnchor)
+            
+// list = listWithListItems(list);
+// appendElementToContainer(list);
