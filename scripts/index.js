@@ -3,12 +3,20 @@
 const oneAddress = "https://google.com";
 
 const addresses = [
-    "https://google.com",
-    "https://bing.com",
-    "https://duckduckgo.com",
-    "https://instagram.com",
-    "https://marthastewart.com"
+    {
+        url: "https://google.com",
+        text: "Goooooogle"
+    },
+    {
+        url: "https://instagram.com",
+        text: "Instagram"
+    }
 ];
+
+// "https://bing.com",
+// "https://duckduckgo.com",
+// "https://instagram.com",
+// "https://marthastewart.com"
 
 const linkContainer = document.querySelector(".js-link-container");
 
@@ -24,8 +32,43 @@ function linkPlacer(linkPath){
 // linkPlacer("https://instagram.com");
 // linkPlacer("https://marthastewart.com");
 
+// How to write an event handling function
+// aka an "Event Handler"
+// aka "Event Handling Callback"
+// aka "Event Callback"
+// What is that????!!?
+// - it's a function
+// - it will be called by the browser, not by you
+// - the browser will pass all the info about the event
+//      - was it a left click? a right click?
+//      - was the user holding down the shift key?
+//      - what are the X and Y coordinates on the page when the clicked
+
+function exampleCallback(event) {    
+    // debugger;
+    // Don't let the browser do
+    // the default behavior.
+    // For anchor tags, that's going to another page.
+    // For forms, it sends user input to a server.
+    event.preventDefault();
+    console.log(event.target);
+    console.log(event.target.href);
+    console.log(event.target.textContent);
+    // event.target.textContent = "alskfdklasjhdfaksljfhsafd"
+    console.log("You clicked!!!!!!!");
+}
+
+function anchorFromObject(obj) {
+    const link = anchorFromLinkPath(obj.url);
+    link.textContent = obj.text;
+
+    link.addEventListener("click", exampleCallback);
+
+    return link;
+}
 
 function anchorFromLinkPath(linkPath) {
+    // debugger;
     // They pass a string like "https://google.com"
     // And I give them the DOM element equivalent
     // of <a href="https://google.com">https://google.com</a>
@@ -34,6 +77,7 @@ function anchorFromLinkPath(linkPath) {
     link.textContent = linkPath;
     return link;
 }
+
 
 function anchorWithFormattedText(anchor) {
     // They give me an element that is equiv to:
@@ -109,11 +153,11 @@ function listWithListItems(listItemArray) {
 
 
 // Version #4: Wrap anchors in list items in an unordered list
-let links = addresses.map(anchorFromLinkPath);
-links = links.map(anchorWithFormattedText);
-let items = links.map(listItemWithAnchor);
-let list = listWithListItems(items);
-appendElementToContainer(list);
+let links = addresses.map(anchorFromObject); // returns array of anchors
+// links = links.map(anchorWithFormattedText);
+let items = links.map(listItemWithAnchor); // wraps anchors in list items
+let list = listWithListItems(items); // wraps list items in <ul>
+appendElementToContainer(list); // adds <ul> to container
 
 
 // Versino #5 Extra fancy: uses chaining syntax
