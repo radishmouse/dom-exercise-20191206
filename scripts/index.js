@@ -49,25 +49,53 @@ function appendBreak() {
     linkContainer.appendChild(breakElement);
 }
 
-function appendAnchorToContainer(anchorElement) {
+function appendElementToContainer(element) {
     // They pass me the DOM element equivalent of
     // <a href="https://google.com">https://google.com</a>
 
     // And I append it as a child to linkContainer
-    linkContainer.appendChild(anchorElement);
+    linkContainer.appendChild(element);
     appendBreak();
 }
 
 // Transform addresses into anchor elements
-// let links = addresses.map(anchorFromLinkPath);
-// links = links.map(anchorWithFormattedText);
-// links.map(appendAnchorToContainer);
+let links = addresses.map(anchorFromLinkPath);
+links = links.map(anchorWithFormattedText);
+let items = links.map(listItemWithAnchor);
+let list = listWithListItems(items);
+appendElementToContainer(list);
 
 // let links = addresses.map(anchorFromLinkPath);
 // links = addresses.map(anchorFromLinkPath).map(anchorWithFormattedText);
-addresses
-    .map(anchorFromLinkPath)
-    .map(anchorWithFormattedText)
-    .map(appendAnchorToContainer)
+// addresses
+//     .map(anchorFromLinkPath)
+//     .map(anchorWithFormattedText)
+//     .map(appendAnchorToContainer)
 
+function listItemWithAnchor(anchor) {
+    // They give me element like this:
+    // <a href="https://google.com">google.com</a>
+    const li = document.createElement("li");
+    li.appendChild(anchor);
+    // I give them an element like this:
+    // <li>
+    //   <a href="https://google.com">google.com</a>
+    // </li>        
+    return li;
+}
 
+function listWithListItems(listItemArray) {
+    const ul = document.createElement('ul');
+    // const ul2 = document.querySelector('ul');
+
+    for (let elementItem of listItemArray) {
+        ul.appendChild(elementItem);
+    }
+
+    return ul;
+}
+
+// const a = anchorFromLinkPath(oneAddress);
+// const li = listItemWithAnchor(a);
+// const ul = listWithListItems([li]);
+// appendElementToContainer(ul);
